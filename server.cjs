@@ -3,6 +3,12 @@ const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 
+// Require and configure the dotenv module:
+require('dotenv').config();
+
+// Connect to the database:
+require('./config/database.cjs');
+
 const app = express();
 
 app.use(logger('dev'));
@@ -13,8 +19,8 @@ app.use(express.json());
 app.use(favicon(path.join(__dirname, 'dist', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, 'dist')));
 
-// Configure to use port 3001 instead of 3000 during development
-const port = process.env.PORT || 3001;
+// Configure to use port 3002 instead of 3000 during development
+const port = process.env.PORT || 3002;
 
 // Put API routes here, before the "catch all" route:
 
