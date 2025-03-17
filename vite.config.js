@@ -1,8 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import morgan from 'morgan';
 
 // https://vite.dev/config/
 export default defineConfig({
+  plugins: [morganPlugin(), react()],
   server: {
     proxy: {
       '/api': {
@@ -11,3 +13,14 @@ export default defineConfig({
     },
   },
 })
+
+function morganPlugin() {
+  return {
+    name: "morgan-plugin",
+    configureServer(server) {
+      return () => {
+        server.middlewares.use(morgan("tiny"));
+      };
+    },
+  };
+}
