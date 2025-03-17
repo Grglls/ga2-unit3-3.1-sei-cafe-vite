@@ -7,7 +7,13 @@ module.exports = {
 
 async function create(req, res) {
   try {
+    // Add the user to the database:
     const user = await User.create(req.body);
+    // token will be a string:
+    const token = createJWT(user);
+    // Use res.json to send back just a string:
+    // (the client code needs to take this into consideration)
+    res.json(token);
   } catch (error) {
     res.status(400).json(error);
   }
