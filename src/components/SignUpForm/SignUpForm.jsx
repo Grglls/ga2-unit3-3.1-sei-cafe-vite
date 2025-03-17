@@ -1,6 +1,7 @@
 // Build this component as a Class to show the difference (may encounter this in the wild)
 // However, React is moving towards the newer function based components these days.
 import { Component } from "react";
+import { signUp } from "../../utilities/users-service";
 
 export default class SignUpForm extends Component {
   state = {
@@ -18,9 +19,20 @@ export default class SignUpForm extends Component {
     });
   };
 
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
-    alert(JSON.stringify(this.state));
+    try {
+      // We don't want to send 'error' or 'confirm' properties,
+      // so make a copy of the state object and delete them:
+      const formData = {...this.state};
+      delete formData.confirm;
+      delete formData.error;
+
+      const user = await signUp(formData);
+      console.log(user);
+    } catch {
+      this.setState({ error: 'Sign-up failed - try again.' });
+    }
   };
   
   render() {
