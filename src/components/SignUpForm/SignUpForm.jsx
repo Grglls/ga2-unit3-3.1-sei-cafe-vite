@@ -28,8 +28,11 @@ export default class SignUpForm extends Component {
       delete formData.confirm;
       delete formData.error;
 
+      // The promise returned by the signUp service method
+      // will resolve to the user object included in the
+      // payload of the JWT
       const user = await signUp(formData);
-      console.log(user);
+      this.props.setUser(user);
     } catch {
       this.setState({ error: 'Sign-up failed - try again.' });
     }
