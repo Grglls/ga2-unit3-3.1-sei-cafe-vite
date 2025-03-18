@@ -6,8 +6,9 @@ export async function signUp(userData) {
   // Delegate the network request code to the users-api module
   // which will ultimately return a JSON Web Token (JWT)
   const token = await usersAPI.signUp(userData);
-  // Baby step by returning whatever was sent back by the server:
-  return token;
+  // Persist the token to localStorage:
+  localStorage.setItem('token', token);
+  return getUser();
 }
 
 export async function login(credentials) {
