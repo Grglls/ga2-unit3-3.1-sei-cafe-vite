@@ -9,3 +9,8 @@ export async function signUp(userData) {
   // Baby step by returning whatever was sent back by the server:
   return token;
 }
+
+export async function login(credentials) {
+  const token = await usersAPI.login(credentials);
+  return token;
+}
