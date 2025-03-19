@@ -14,7 +14,8 @@ export async function signUp(userData) {
 export async function login(credentials) {
   // Delegate the AJAX request to the users-api.js module.
   const token = await usersAPI.login(credentials);
-  return token;
+  localStorage.setItem('token', token);
+  return getUser();
 }
 
 export function logOut() {
