@@ -19,6 +19,10 @@ app.use(express.json());
 app.use(favicon(path.join(__dirname, 'dist', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, 'dist')));
 
+// Middleware to verify token and assin user object of payload to req.user:
+// (Be sure to mount before routes!)
+app.use(require('./config/checkToken.cjs'));
+
 // Configure to use port 3002 instead of 3000 during development
 const port = process.env.PORT || 3002;
 
