@@ -5,7 +5,6 @@ const User = require('../../models/user.cjs');
 module.exports = {
   create,
   login,
-  checkToken
 };
 
 async function create(req, res) {
