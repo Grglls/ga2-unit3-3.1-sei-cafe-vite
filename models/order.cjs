@@ -60,4 +60,29 @@ orderSchema.statics.getCart = function(userId) {
   );
 };
 
+// Instance method for adding an item to a cart (unpaid order):
+orderSchema.methods.addItemToCart = async function(itemId) {
+  // 'this' keyword is bound to the cart (order document) so we could use 'this',
+  //  but create a named const called cart to make the code more readable:
+  const cart = this;
+  // Check if the item already exists in the cart:
+  const lineItem = cart.lineItems.find(lineItem => lineItem.item._id.equals(itemId));
+  if (lineItem) {
+    // It already exists in the cart, so increase qty:
+    lineItem.qty += 1;
+  } else {
+    // Get the item from the 'catalog':
+    // Note: the mongoose.model method behaves as a getter when passed one arg vs. two.
+    // Note: we could require the Item model at the top, but this risks getting into a 
+    //  circlular reference error (where one model requires another and vice versa).
+    const Item = mongoose.model('Item');
+    const item = await Item.findById(itemId);
+    // The qty of the new lineItem object being pushed in defaults to 1:
+    cart.lineItems.push({ item });
+    // short hand for: cart.lineItems.push({ qty: 1, item: item });
+    }
+  // Return the save() method's promise:
+  return cart.save();
+}
+
 module.exports = mongoose.model('Order', orderSchema);
