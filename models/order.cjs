@@ -85,4 +85,20 @@ orderSchema.methods.addItemToCart = async function(itemId) {
   return cart.save();
 }
 
+// Instance method to set an item's qty in the cart:
+orderSchema.methods.setItemQty = function(itemId, newQty) {
+  // 'this' keyword is bound to the card (order document), but make a named const for easier readability:
+  const cart = this;
+  // Find the line item in the cart for the menu item:
+  const lineItem = cart.lineItems.find(lineItem => lineItem.item._id.equals(itemId));
+  if (lineItem && newQty <= 0) {
+    // Calling deleteOne() removes itself from the cart.lineItems array:
+    lineItem.deleteOne();
+  } else if (lineItem) {
+    lineItem.qty = newQty;
+  }
+  // Return the save() method's promise:
+  return cart.save();
+};
+
 module.exports = mongoose.model('Order', orderSchema);
