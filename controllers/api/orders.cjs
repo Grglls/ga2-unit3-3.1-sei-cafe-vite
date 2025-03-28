@@ -6,6 +6,7 @@ module.exports = {
   addToCart,
   setItemQtyInCart,
   checkout,
+  index
 };
 
 // A cart is the unpaid order for a user
@@ -34,4 +35,13 @@ async function checkout(req, res) {
   cart.isPaid = true;
   await cart.save();
   res.json(cart);
+}
+
+// Get all orders for the logged in user:
+async function index(req, res) {
+  const orders = await Order.find({
+    'user': req.user._id,
+    'isPaid': true
+  }).sort({ 'updatedAt': -1 });
+  res.json(orders);
 }
