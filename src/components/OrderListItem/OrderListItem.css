@@ -1,0 +1,30 @@
+.OrderListItem {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3vmin;
+  padding: 2vmin;
+  color: var(--text-light);
+  background-color: var(--white);
+  border: .1vmin solid var(--tan-3);
+  border-radius: 1vmin;
+  font-size: 2vw;
+  cursor: pointer;
+}
+
+.active {
+  border: .1vmin solid var(--orange);
+}
+
+.OrderListItem .subheading-left {
+  font-size: 1.7vw;
+  text-align: left;
+  color: var(--text-light);
+}
+
+.OrderListItem .subheading-right {
+  font-size: 1.7vw;
+  text-align: right;
+  color: var(--text-light);
+}
